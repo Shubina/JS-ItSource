@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+</html>
+<script>
+function Horse (name) {
+  this.name = name;
+  this.mileage = 0;
+  this.tired = 0;
+  this.run = function (length) {
+    this.mileage += length;
+    this.constructor.prototype.total += length;
+    this.rest(this.mileage);
+    return this.mileage;
+  };
+  this.rest = function (mileage) {
+    for (var i = 0; i <= mileage; i++){
+      this.tired++;
+      if (this.tired == 10) {
+        setTimeout(function(){
+          console.log('We will rest')
+        }, 1000)
+        this.tired = 0;
+      }
+    } return this.tired;
+  };
+}
+  
+Horse.prototype = {
+  total: 0,
+    constructor: Horse
+  }
+
+var h1 = new Horse ('Pony');
+h1.run(22);
+
+console.log (h1);
+console.log (h1.total);
+
+// var h2 = new Horse ('Mony');
+// h2.run(20);
+// console.log (h2);
+// console.log (h2.total);
+
+</script>
+
+
+
+
