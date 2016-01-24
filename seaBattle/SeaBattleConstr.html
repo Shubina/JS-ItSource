@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>seaFight</title>
+</head>
+<body>
+	
+</body>
+</html>
+<script>
+function BattleField() {
+  this.field;
+}
+
+BattleField.prototype = {
+  constructor: BattleField,
+  fillField: function (size) {
+   		this.field = [];
+   		for (var i = 0; i < size; i++) {
+		 	this.field[i] = [];
+	   		for (var j = 0; j < size; j++) {
+	   		 	this.field[i][j] = {
+	   		 		chip: false,
+	   		 		opened: false,
+	   		 		msg: 'Промазал!',
+	   		 		placeble: true
+	   			}
+		  	}
+		}	return this.field;
+	},
+  putChip: function(i, j) {
+   		valid = this.isValid(i, j);
+   		if (valid) {
+   			if (!(this.field[i][j].chip) && this.field[i][j].placeble) {
+   				this.field[i][j].chip = true;
+   				this.field[i][j].placeble = false;
+   				this.field[i+1][j].placeble = false;
+   				this.field[i-1][j].placeble = false;
+   				this.field[i][j+1].placeble = false;
+   				this.field[i][j-1].placeble = false;
+   			} else {
+   					console.log('It is impossible to put ship');
+   			}
+   		}
+	},
+ 	setMessage: function(i, j) {
+ 		this.field[i][j].msg = 'Hit!';
+ 		alert ('Hit!!!');
+ 	return this.field;
+ 	},
+ 	isValid: function(i, j) {
+   	var valid;
+   	if (i >= this.field.length || j >= this.field.length) {
+   		valid = false;
+   		console.log('Incorrect index!');
+   	} else {
+   		valid = true;
+   	}
+   	return valid;
+ 	},
+ 	hit: function(i, j) {
+ 		valid = this.isValid (i, j);
+ 		if(valid) {
+ 			this.field[i][j].opened = true;
+ 			if(this.field[i][j].chip) {
+ 				this.setMessage (i, j);
+ 				this.field[i][j].chip = false;
+ 				test = this.hasChips();
+ 			} else {
+ 				alert ('Miss');
+ 			}
+ 		} else {
+ 			return valid;
+ 		}
+ 	},
+ 	hasChips: function() { // ПОЧЕМУ НЕ РАБОТАЕТ???
+ 		var test;
+ 		for (var i = 0; i < this.field.length; i++) {
+ 			for (var j = 0; j < this.field.length; j++) {
+ 				if (this.field[i][j].chip) {
+ 					test = true;
+ 					console.log('Look more ships');
+ 				}
+ 				else {
+ 					test = false;
+ 					console.log('The end!');
+ 				}
+ 			}
+ 		} return test;
+ 	}
+}
+var battle1 = new BattleField();
+
+console.table (battle1.fillField(+prompt('Количество строк', 10 )));
+battle1.putChip(1,1);
+battle1.hit(1,2);
+battle1.hit(1,1);
+
+
+</script>
